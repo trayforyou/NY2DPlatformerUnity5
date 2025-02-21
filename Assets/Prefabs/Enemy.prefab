@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 1225604663828290246}
   - component: {fileID: 6898824892008651085}
   - component: {fileID: 1083456485193499875}
-  - component: {fileID: 7090506870792495454}
+  - component: {fileID: 7292796212834075346}
+  - component: {fileID: 7437768795745585619}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -171,7 +172,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7090506870792495454
+--- !u!114 &7292796212834075346
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -185,8 +186,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movePoints:
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   _stayTime: 2
   _speed: 5
   _currentWayPoint: {fileID: 0}
+--- !u!114 &7437768795745585619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2998903192055040016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 605f4909efb8f5643b804a51b7939b26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
+  _enemyMover: {fileID: 0}

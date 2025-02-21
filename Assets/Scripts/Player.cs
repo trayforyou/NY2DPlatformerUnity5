@@ -1,5 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerController))]
+[RequireComponent(typeof(PlayerMover))]
 [RequireComponent(typeof(Picker))]
+[RequireComponent(typeof(PlayerAnimationChanger))]
 public class Player : MonoBehaviour{}
