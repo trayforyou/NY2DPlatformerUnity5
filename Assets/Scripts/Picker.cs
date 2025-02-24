@@ -12,10 +12,10 @@ public class Picker : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Apple>(out _))
+        if (collision.TryGetComponent<Apple>(out Apple apple))
         {
             _applesCount++;
-            Destroy(collision.gameObject);
+            apple.Pick();
         }
     }
 }

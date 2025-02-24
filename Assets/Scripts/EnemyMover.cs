@@ -1,22 +1,25 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(EnemyAnimationChanger))]
+[RequireComponent(typeof(Fliper))]
 public class EnemyMover : MonoBehaviour
 {
     [SerializeField] private List<WayPoint> _movePoints;
     [SerializeField] private float _stayTime;
     [SerializeField] private float _speed;
 
-    [SerializeField]private WayPoint _currentWayPoint;
+    private WayPoint _currentWayPoint;
     private Rigidbody2D _rigidbody;
+    private Fliper _fliper;
+    private WaitForSeconds _wait;
     private Vector2 _currentDirection;
-    private Vector3 _seeOnLeft;
-    private Vector3 _seeOnRight;
+    private Coroutine _coroutine;
     private float _minimalDistance;
     private int _currentIndexWayPoint;
     private bool _isRun;
@@ -25,9 +28,9 @@ public class EnemyMover : MonoBehaviour
 
     private void Awake()
     {
+        _wait = new WaitForSeconds(_stayTime);
+        _fliper = GetComponent<Fliper>();
         _rigidbody = GetComponent<Rigidbody2D>();
-        _seeOnLeft = new Vector3(0, 180, 0);
-        _seeOnRight = Vector3.zero;
         _minimalDistance = 0.1f;
         _currentIndexWayPoint = 0;
         _currentWayPoint = _movePoints[_currentIndexWayPoint];
@@ -44,6 +47,9 @@ public class EnemyMover : MonoBehaviour
         if (transform.position.IsEnoughClose(_currentWayPoint.transform.position, _minimalDistance))
         {
             _currentDirection = (_currentWayPoint.transform.position - transform.position).normalized;
+           
+            _fliper.Flip(_currentDirection.x);
+           
             _rigidbody.velocity = new Vector2(_speed * _currentDirection.x, _rigidbody.velocity.y);
             _isRun = true;
 
@@ -57,25 +63,24 @@ public class EnemyMover : MonoBehaviour
 
             _rigidbody.velocity = Vector2.zero;
 
-            Invoke("ChangeWayPoint", _stayTime);
+            _coroutine = StartCoroutine(ChangeWayPoint());
         }
-
-        if (_rigidbody.velocity.x > 0)
-            transform.rotation = Quaternion.Euler(_seeOnRight);
-
-        if (_rigidbody.velocity.x < 0)
-            transform.rotation = Quaternion.Euler(_seeOnLeft);
     }
 
-    private void ChangeWayPoint()
+    private IEnumerator ChangeWayPoint()
     {
-        _currentIndexWayPoint++;
-
-        if (_currentIndexWayPoint == _movePoints.Count)
+        while (enabled)
         {
-            _currentIndexWayPoint = 0;
-        }
+            yield return _wait;
 
-        _currentWayPoint = _movePoints[_currentIndexWayPoint];
+            _currentIndexWayPoint++;
+
+            if (_currentIndexWayPoint == _movePoints.Count)
+                _currentIndexWayPoint = 0;
+
+            _currentWayPoint = _movePoints[_currentIndexWayPoint];
+
+            StopCoroutine(_coroutine);
+        }
     }
 }

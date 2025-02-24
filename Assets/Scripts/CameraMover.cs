@@ -7,8 +7,8 @@ public class CameraMover : MonoBehaviour
 
     private Vector2 _velocity = Vector2.zero;
 
-    private void Update()
+    private void LateUpdate()
     {
         transform.position = Vector2.SmoothDamp(transform.position, _player.position, ref _velocity, _smooth);
-   }
+    }
 }

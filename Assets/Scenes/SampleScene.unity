@@ -193,6 +193,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 266218255}
+  - component: {fileID: 266218256}
   m_Layer: 0
   m_Name: GroundChecker
   m_TagString: Untagged
@@ -215,6 +216,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 942710726}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &266218256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266218254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbaf57c0a29f9164c94372b900422f23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  _rigidbodyCharacter: {fileID: 942710722}
 --- !u!1001 &324507264
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -928,6 +945,7 @@ GameObject:
   - component: {fileID: 942710729}
   - component: {fileID: 942710728}
   - component: {fileID: 942710727}
+  - component: {fileID: 942710732}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1110,6 +1128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb49794e6b8fad24d9bf76fadad1a123, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _groundDetector: {fileID: 266218256}
 --- !u!114 &942710729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1137,10 +1156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 5
   _jumpForce: 30
-  _groundChecker: {fileID: 266218255}
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
+  _groundDetector: {fileID: 266218256}
 --- !u!114 &942710731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1151,6 +1167,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 167723ff911336949a27282fc3e581f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &942710732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 942710721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f53928257162e245bc356a7eb8569de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &979520997 stripped
@@ -30761,6 +30789,10 @@ PrefabInstance:
     - target: {fileID: 2998903192055040016, guid: b56a82c800ac9e842a6c07133e1ead8b, type: 3}
       propertyPath: m_Name
       value: Enemy1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623635720755063061, guid: b56a82c800ac9e842a6c07133e1ead8b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4623635720755063061, guid: b56a82c800ac9e842a6c07133e1ead8b, type: 3}
       propertyPath: m_LocalPosition.x

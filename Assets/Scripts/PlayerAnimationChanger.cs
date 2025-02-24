@@ -1,10 +1,11 @@
 using UnityEngine;
 
-
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(PlayerMover))]
 public class PlayerAnimationChanger : MonoBehaviour
 {
+    [SerializeField] private GroundDetector _groundDetector;
+
     private PlayerMover _playerMover;
     private Animator _animator;
 
@@ -15,14 +16,14 @@ public class PlayerAnimationChanger : MonoBehaviour
 
         _playerMover.Ran += ChangeRunAnimation;
         _playerMover.Jumped += ChangeJumpAnimation;
-        _playerMover.Fell += ChangeFallAnimation;
+        _groundDetector.Fell += ChangeFallAnimation;
     }
 
     private void OnDisable()
     {
         _playerMover.Ran -= ChangeRunAnimation;
         _playerMover.Jumped -= ChangeJumpAnimation;
-        _playerMover.Fell -= ChangeFallAnimation;
+        _groundDetector.Fell -= ChangeFallAnimation;
     }
 
     private void ChangeFallAnimation(bool isFall) =>

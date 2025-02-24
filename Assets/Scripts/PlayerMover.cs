@@ -5,76 +5,62 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(InputPlayer))]
+[RequireComponent(typeof(Fliper))]
 public class PlayerMover : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpForce;
-    [SerializeField] private Transform _groundChecker;
-    [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] private GroundDetector _groundDetector;
 
     private Rigidbody2D _rigidbody;
     private InputPlayer _inputPlayer;
-    private Vector2 _groundCheckerSize;
-    private Vector3 _seeOnRight;
-    private Vector2 _seeOnLeft;
-    private bool _isGrounded;
+    private Fliper _fliper;
+    private float _xMove;
+    private bool _isTryJump;
 
     public event Action<bool> Ran;
     public event Action<bool> Jumped;
-    public event Action<bool> Fell;
 
     private void Awake()
     {
-        float widthCapsule = 0.8f;
-        float heightCapsule = 0.1f;
-
+        _xMove = 0;
+        _isTryJump = false;
         _rigidbody = GetComponent<Rigidbody2D>();
         _inputPlayer = GetComponent<InputPlayer>();
-        _groundCheckerSize = new Vector2(widthCapsule, heightCapsule);
-        _seeOnLeft = new Vector3(0, 180, 0);
-        _seeOnRight = Vector3.zero;
+        _fliper = GetComponent<Fliper>();
 
-        _inputPlayer.XInputed += Run;
-        _inputPlayer.JumpInputed += Jump;
+        _inputPlayer.XInputed += MoveRun;
+        _inputPlayer.JumpInputed += MoveJump;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        CheckFall();
+        Jump();
+        Run();
     }
 
     private void OnDisable()
     {
-        _inputPlayer.XInputed -= Run;
-        _inputPlayer.JumpInputed -= Jump;
+        _inputPlayer.XInputed -= MoveRun;
+        _inputPlayer.JumpInputed -= MoveJump;
     }
 
-    private void CheckFall()
+    private void MoveJump(bool isTryJump)
     {
-        _isGrounded = Physics2D.OverlapCapsule(_groundChecker.position, _groundCheckerSize, CapsuleDirection2D.Horizontal, 0, _groundLayer);
-
-        if (!_isGrounded && _rigidbody.velocity.y < 0)
-        {
-            Jumped?.Invoke(false);
-            Fell?.Invoke(true);
-        }
-        else
-        {
-            Fell?.Invoke(false);
-        }
+        if (_groundDetector.IsGrounded)
+            _isTryJump = isTryJump;
     }
 
-    private void Run(float xInput)
+    private void MoveRun(float xMove) =>
+        _xMove = xMove;
+
+    private void Run()
     {
-        _rigidbody.velocity = new Vector2(xInput * _speed, _rigidbody.velocity.y);
+        _rigidbody.velocity = new Vector2(_xMove * _speed, _rigidbody.velocity.y);
 
-        if (xInput > 0)
-            transform.rotation = Quaternion.Euler(_seeOnRight);
+        _fliper.Flip(_xMove);
 
-        if (xInput < 0)
-            transform.rotation = Quaternion.Euler(_seeOnLeft);
-
-        if (xInput != 0 && _isGrounded)
+        if (_xMove != 0 && _groundDetector.IsGrounded)
             Ran?.Invoke(true);
         else
             Ran?.Invoke(false);
@@ -82,11 +68,16 @@ public class PlayerMover : MonoBehaviour
 
     private void Jump()
     {
-        if (_isGrounded)
+        if (_isTryJump)
         {
-            Jumped?.Invoke(true);
-
             _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+
+            Jumped?.Invoke(true);
+            _isTryJump = false;
+        }
+        else if (_rigidbody.velocity.y < 0)
+        {
+            Jumped?.Invoke(false);
         }
     }
 }
