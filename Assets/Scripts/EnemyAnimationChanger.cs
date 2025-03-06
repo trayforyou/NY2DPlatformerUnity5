@@ -20,5 +20,5 @@ public class EnemyAnimationChanger : MonoBehaviour
         _enemyMover.Ran -= Run;
 
     private void Run(bool isRunning) =>
-        _animator.SetBool(AnimatorData.Params.IsRunning, isRunning);
+        _animator.SetTrigger(AnimatorData.Params.Run);
 }

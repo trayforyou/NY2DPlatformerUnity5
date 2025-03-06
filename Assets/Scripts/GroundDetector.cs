@@ -7,9 +7,12 @@ public class GroundDetector : MonoBehaviour
     [SerializeField] private Rigidbody2D _rigidbodyCharacter;
 
     private bool _isGrounded;
+    private bool _isJump;
+    private bool _isFall;
     private Vector2 _groundCheckerSize;
 
-    public event Action<bool> Fell;
+    public event Action Fell;
+    public event Action Jumped;
     
     public bool IsGrounded => _isGrounded;
 
@@ -17,7 +20,8 @@ public class GroundDetector : MonoBehaviour
     {
         float widthCapsule = 0.8f;
         float heightCapsule = 0.1f;
-
+        _isJump = false;
+        _isFall = false;
         _groundCheckerSize = new Vector2(widthCapsule, heightCapsule);
     }
 
@@ -30,9 +34,27 @@ public class GroundDetector : MonoBehaviour
 
     private void CheckFall()
     {
-        if (!_isGrounded && _rigidbodyCharacter.velocity.y < 0)
-            Fell?.Invoke(true);
+        if(!_isGrounded)
+        {
+            if (!_isJump && _rigidbodyCharacter.velocity.y > 0)
+            {
+                Jumped?.Invoke();
+
+                _isJump = true;
+                _isFall = false;
+            }
+            else if(!_isFall && _rigidbodyCharacter.velocity.y < 0)
+            {
+                Fell?.Invoke();
+
+                _isJump = false;
+                _isFall = true;
+            }
+        }   
         else
-            Fell?.Invoke(false);
+        {
+            _isJump = false;
+            _isFall = false;
+        }
     }
 }
