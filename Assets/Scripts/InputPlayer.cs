@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerMover))]
 public class InputPlayer : MonoBehaviour
 {
     public const string Horizontal = nameof(Horizontal);
@@ -12,7 +11,7 @@ public class InputPlayer : MonoBehaviour
 
     public event Action<float> XInputed;
     public event Action<bool> JumpInputed;
-    public event Action<bool> Attacked;
+    public event Action Attacked;
 
     private void Update()
     {
@@ -24,6 +23,6 @@ public class InputPlayer : MonoBehaviour
             JumpInputed?.Invoke(true);
 
         if(Input.GetButtonDown(Fire1))
-            Attacked?.Invoke(true);
+            Attacked?.Invoke();
     }
 }

@@ -1,28 +1,32 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(PlayerMover))]
-[RequireComponent(typeof(PlayerAttack))]
 public class PlayerAnimationChanger : MonoBehaviour
 {
     [SerializeField] private GroundDetector _groundDetector;
 
     private PlayerMover _playerMover;
-    private PlayerAttack _playerAttack;
     private Animator _animator;
+    private Coroutine _coroutine;
+    private WaitForSeconds _waitForAttack;
+    private int _currentState;
+    private bool _canChangeState;
+    private float _attackDelay;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _playerMover = GetComponent<PlayerMover>();
-        _playerAttack = GetComponent<PlayerAttack>();
 
         _playerMover.Ran += ChangeRunAnimation;
         _playerMover.Stopped += ChangeIdleAnimation;
-        _playerAttack.Attacked += ChangeAttackAnimation;
         _groundDetector.Fell += ChangeFallAnimation;
         _groundDetector.Jumped += ChangeJumpAnimation;
+
+        _canChangeState = true;
     }
 
     private void OnDisable()
@@ -30,18 +34,43 @@ public class PlayerAnimationChanger : MonoBehaviour
 
     }
 
-    private void ChangeFallAnimation() =>
-        _animator.SetTrigger(AnimatorData.Params.Fall);
+    private void ChangeFallAnimation()
+    {
+        if (_currentState != AnimatorData.Params.Fall && _canChangeState)
+        {
+            _animator.Play(AnimatorData.Params.Fall);
+            
+            _currentState = AnimatorData.Params.Fall;
+        }
+    }
 
-    private void ChangeJumpAnimation() =>
-        _animator.SetTrigger(AnimatorData.Params.Jump);  
+    private void ChangeJumpAnimation()
+    {
+        if (_currentState != AnimatorData.Params.Jump && _canChangeState)
+        {
+            _animator.Play(AnimatorData.Params.Jump);
+            
+            _currentState = AnimatorData.Params.Jump;
+        }
+    }
 
-    private void ChangeRunAnimation() =>
-        _animator.SetTrigger(AnimatorData.Params.Run);
+    private void ChangeRunAnimation()
+    {
+        if (_currentState != AnimatorData.Params.Run && _canChangeState)
+        {
+            _animator.Play(AnimatorData.Params.Run);
+            
+            _currentState = AnimatorData.Params.Run;
+        }
+    }
 
-    private void ChangeAttackAnimation() =>
-        _animator.SetTrigger(AnimatorData.Params.Attack);
-
-    private void ChangeIdleAnimation() =>
-        _animator.SetTrigger(AnimatorData.Params.Idle);
+    private void ChangeIdleAnimation()
+    {
+        if (_currentState != AnimatorData.Params.Idle && _canChangeState)
+        {
+            _animator.Play(AnimatorData.Params.Idle);
+        
+            _currentState = AnimatorData.Params.Idle;
+        }
+    }
 }

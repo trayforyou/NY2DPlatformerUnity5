@@ -3,11 +3,8 @@ using System.Drawing;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(InputPlayer))]
 [RequireComponent(typeof(Fliper))]
-[RequireComponent(typeof(PlayerAttack))]
 public class PlayerMover : MonoBehaviour
 {
     [SerializeField] private float _speed;
@@ -17,7 +14,6 @@ public class PlayerMover : MonoBehaviour
     private Rigidbody2D _rigidbody;
     private InputPlayer _inputPlayer;
     private Fliper _fliper;
-    private PlayerAttack _playerAttack;
     private float _xMove;
     private bool _isTryJump;
     private bool _isRunning;
@@ -35,11 +31,9 @@ public class PlayerMover : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _inputPlayer = GetComponent<InputPlayer>();
         _fliper = GetComponent<Fliper>();
-        _playerAttack = GetComponent<PlayerAttack>();
 
         _inputPlayer.XInputed += MoveRun;
         _inputPlayer.JumpInputed += MoveJump;
-        _playerAttack.Attacked += SkipState;
         _groundDetector.Jumped += SkipState;
         _groundDetector.Fell += SkipState;
     }
@@ -69,11 +63,9 @@ public class PlayerMover : MonoBehaviour
     {
         if (_groundDetector.IsGrounded)
         {
-            if (_xMove == 0 && !_isStaying)
+            if (_xMove == 0)
             {
                 Stopped?.Invoke();
-
-                Debug.Log("Встал");
 
                 _isRunning = false;
                 _isStaying = true;
@@ -89,7 +81,7 @@ public class PlayerMover : MonoBehaviour
 
         if (_groundDetector.IsGrounded)
         {
-            if (_xMove != 0 && !_isRunning)
+            if (_xMove != 0)
             {
                 Ran?.Invoke();
 
@@ -105,6 +97,8 @@ public class PlayerMover : MonoBehaviour
         {
             _isTryJump = false;
             _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+
+            
         }
     }
 
