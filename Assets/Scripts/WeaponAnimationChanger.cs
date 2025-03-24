@@ -37,9 +37,4 @@ public class WeaponAnimationChanger : MonoBehaviour
 
         _currentState = AnimatorData.Params.Idle;
     }
-
-    private IEnumerator WiteAnimationAttack()
-    {
-
-    }
 }
