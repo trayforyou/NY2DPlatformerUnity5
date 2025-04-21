@@ -1,4 +1,3 @@
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class Health : MonoBehaviour
@@ -9,7 +8,10 @@ public class Health : MonoBehaviour
     {
         _healthPoint -= damage;
 
-        if(_healthPoint <= 0)
+        if (_healthPoint <= 0)
             Destroy(gameObject);
     }
+
+    public void Heal(int healPoints) =>
+        _healthPoint += healPoints;
 }

@@ -1,4 +1,3 @@
 using UnityEngine;
 
-public class Hand : MonoBehaviour
-{}
+public class Hand : MonoBehaviour{}
