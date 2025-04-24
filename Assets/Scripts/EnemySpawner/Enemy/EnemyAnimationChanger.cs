@@ -1,31 +1,13 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(EnemyMover))]
-[RequireComponent(typeof(Rigidbody2D))]
 public class EnemyAnimationChanger : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
-    [SerializeField] private EnemyMover _enemyMover;
 
     private int _currentState;
 
-    private void Awake()
-    {
-        _enemyMover = GetComponent<EnemyMover>();
-        _animator = GetComponent<Animator>();
-
-        _enemyMover.Ran += ChangeRunAnimation;
-        _enemyMover.Stopped += ChangeIdleAnimation;
-    }
-
-    private void OnDisable()
-    {
-        _enemyMover.Ran -= ChangeRunAnimation;
-        _enemyMover.Stopped -= ChangeIdleAnimation;
-    }
-
-    private void ChangeRunAnimation()
+    public void ChangeRunAnimation()
     {
         if (_currentState != AnimatorData.Params.Run)
         {
@@ -35,7 +17,7 @@ public class EnemyAnimationChanger : MonoBehaviour
         }
     }
 
-    private void ChangeIdleAnimation()
+    public void ChangeIdleAnimation()
     {
         if (_currentState != AnimatorData.Params.Idle)
         {
@@ -44,4 +26,7 @@ public class EnemyAnimationChanger : MonoBehaviour
             _currentState = AnimatorData.Params.Idle;
         }
     }
+
+    private void Awake() =>
+        _animator = GetComponent<Animator>();
 }

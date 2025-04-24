@@ -4,21 +4,11 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class WeaponAnimationChanger : MonoBehaviour
 {
-    [SerializeField] private Animator _animator;
+    private Animator _animator;
 
-    private WeaponAttack _weaponAttack;
-
-    private void Awake()
-    {
-        _weaponAttack = GetComponent<WeaponAttack>();
-
-        _weaponAttack.Attacked += ChangeAttackAnimation;
-    }
-
-    private void OnDisable() =>
-        _weaponAttack.Attacked -= ChangeAttackAnimation;
-
-
-    private void ChangeAttackAnimation() =>
+    public void ChangeAttackAnimation() =>
         _animator.Play(AnimatorData.Params.Attack);
+
+    private void Awake() =>
+        _animator = GetComponent<Animator>();
 }

@@ -4,8 +4,6 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(EnemyAnimationChanger))]
 [RequireComponent(typeof(Fliper))]
 public class EnemyMover : MonoBehaviour
@@ -17,6 +15,7 @@ public class EnemyMover : MonoBehaviour
     [SerializeField] private float _rageSpeed;
 
     private WayPoint _currentWayPoint;
+    private EnemyAnimationChanger _enemyAnimationChanger;
     private Rigidbody2D _rigidbody;
     private Fliper _fliper;
     private WaitForSeconds _waitChangeWaiPoint;
@@ -27,13 +26,11 @@ public class EnemyMover : MonoBehaviour
     private bool _isRun;
     private bool _isAttack;
 
-    public event Action Ran;
-    public event Action Stopped;
-
     private void Awake()
     {
         _waitChangeWaiPoint = new WaitForSeconds(_stayTime);
         _fliper = GetComponent<Fliper>();
+        _enemyAnimationChanger = GetComponent<EnemyAnimationChanger>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _minimalDistance = 0.5f;
         _isAttack = false;
@@ -75,13 +72,13 @@ public class EnemyMover : MonoBehaviour
             _rigidbody.velocity = new Vector2(_speed * _currentDirection.x, _rigidbody.velocity.y);
             _isRun = true;
 
-            Ran?.Invoke();
+            _enemyAnimationChanger.ChangeRunAnimation();
         }
         else if (_isRun)
         {
             _isRun = false;
 
-            Stopped?.Invoke();
+            _enemyAnimationChanger.ChangeIdleAnimation();
 
             _rigidbody.velocity = Vector2.zero;
 

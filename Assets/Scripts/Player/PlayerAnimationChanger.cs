@@ -1,38 +1,15 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(PlayerMover))]
 public class PlayerAnimationChanger : MonoBehaviour
 {
     [SerializeField] private GroundDetector _groundDetector;
 
-    private PlayerMover _playerMover;
     private Animator _animator;
     private int _currentState;
     private bool _canChangeState;
 
-    private void Awake()
-    {
-        _animator = GetComponent<Animator>();
-        _playerMover = GetComponent<PlayerMover>();
-
-        _playerMover.Ran += ChangeRunAnimation;
-        _playerMover.Stopped += ChangeIdleAnimation;
-        _groundDetector.Fell += ChangeFallAnimation;
-        _groundDetector.Jumped += ChangeJumpAnimation;
-
-        _canChangeState = true;
-    }
-
-    private void OnDisable()
-    {
-        _playerMover.Ran -= ChangeRunAnimation;
-        _playerMover.Stopped -= ChangeIdleAnimation;
-        _groundDetector.Fell -= ChangeFallAnimation;
-        _groundDetector.Jumped -= ChangeJumpAnimation;
-    }
-
-    private void ChangeFallAnimation()
+    public void ChangeFallAnimation()
     {
         if (_currentState != AnimatorData.Params.Fall && _canChangeState)
         {
@@ -42,7 +19,7 @@ public class PlayerAnimationChanger : MonoBehaviour
         }
     }
 
-    private void ChangeJumpAnimation()
+    public void ChangeJumpAnimation()
     {
         if (_currentState != AnimatorData.Params.Jump && _canChangeState)
         {
@@ -52,7 +29,7 @@ public class PlayerAnimationChanger : MonoBehaviour
         }
     }
 
-    private void ChangeRunAnimation()
+    public void ChangeRunAnimation()
     {
         if (_currentState != AnimatorData.Params.Run && _canChangeState)
         {
@@ -62,7 +39,7 @@ public class PlayerAnimationChanger : MonoBehaviour
         }
     }
 
-    private void ChangeIdleAnimation()
+    public void ChangeIdleAnimation()
     {
         if (_currentState != AnimatorData.Params.Idle && _canChangeState)
         {
@@ -70,5 +47,12 @@ public class PlayerAnimationChanger : MonoBehaviour
         
             _currentState = AnimatorData.Params.Idle;
         }
+    }
+
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+
+        _canChangeState = true;
     }
 }

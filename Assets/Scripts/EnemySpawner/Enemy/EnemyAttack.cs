@@ -17,7 +17,6 @@ public class EnemyAttack : MonoBehaviour
     private bool _isAttacking;
 
     public event Action<bool> RageStarted;
-    public event Action Attacked;
 
     private void Awake()
     {
@@ -26,9 +25,10 @@ public class EnemyAttack : MonoBehaviour
         _waitAttackDelay = new WaitForSeconds(_attackDelay);
 
         _weaponAttack.SetNewTarget(_playerLayerMask);
+   }
 
+    private void OnEnable() =>
         _playerChecker.SawPlayer += StartAttack;
-    }
 
     private void OnDisable()
     {

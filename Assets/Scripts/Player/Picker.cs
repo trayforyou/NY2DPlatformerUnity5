@@ -19,14 +19,13 @@ public class Picker : MonoBehaviour
         _health = GetComponent<Health>();
 
         _applesCount = 0;
+    }
 
+    private void OnEnable() =>
         _inputPlayer.Picked += PickWeapon;
-    }
 
-    private void OnDisable()
-    {
+    private void OnDisable() =>
         _inputPlayer.Picked -= PickWeapon;
-    }
 
     private void OnTriggerStay2D(Collider2D collision)
     {

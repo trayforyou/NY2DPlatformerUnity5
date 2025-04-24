@@ -23,7 +23,10 @@ public class PlayerAttack : MonoBehaviour
         _playerHand = GetComponent<PlayerHand>();
         _canTakeDamage = true;
         _isReadyToAttack = true;
+    }
 
+    private void OnEnable()
+    {
         _playerHand.ChangedWeapon += ChangeWeapon;
         _inputPlayer.Attacked += Attack;
     }

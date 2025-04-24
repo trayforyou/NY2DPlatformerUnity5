@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(Fliper))]
+[RequireComponent(typeof(PlayerAnimationChanger))]
 public class PlayerMover : MonoBehaviour
 {
     [SerializeField] private float _speed;
@@ -12,21 +13,27 @@ public class PlayerMover : MonoBehaviour
 
     private Rigidbody2D _rigidbody;
     private PlayerInput _inputPlayer;
+    private PlayerAnimationChanger _playerAnimationChanger;
     private Fliper _fliper;
     private float _xMove;
     private bool _isTryJump;
-
-    public event Action Ran;
-    public event Action Stopped;
+    private bool _isJump;
+    private bool _isFall;
 
     private void Awake()
     {
         _xMove = 0;
         _isTryJump = false;
+        _isJump = false;
+        _isFall = false;
         _rigidbody = GetComponent<Rigidbody2D>();
         _inputPlayer = GetComponent<PlayerInput>();
         _fliper = GetComponent<Fliper>();
+        _playerAnimationChanger = GetComponent<PlayerAnimationChanger>();
+    }
 
+    private void OnEnable()
+    {
         _inputPlayer.XInputed += MoveRun;
         _inputPlayer.JumpInputed += MoveJump;
     }
@@ -36,6 +43,7 @@ public class PlayerMover : MonoBehaviour
         Jump();
         Run();
         Stay();
+        CheckFall();
     }
 
     private void OnDisable()
@@ -53,7 +61,7 @@ public class PlayerMover : MonoBehaviour
     private void Stay()
     {
         if (_groundDetector.IsGrounded && _xMove == 0)
-                Stopped?.Invoke();
+            _playerAnimationChanger.ChangeIdleAnimation();
     }
 
     private void Run()
@@ -63,7 +71,7 @@ public class PlayerMover : MonoBehaviour
         _fliper.Flip(_xMove);
 
         if (_groundDetector.IsGrounded && _xMove != 0)
-                Ran?.Invoke();         
+                _playerAnimationChanger.ChangeRunAnimation();         
     }
 
     private void Jump()
@@ -73,6 +81,32 @@ public class PlayerMover : MonoBehaviour
             _isTryJump = false;
 
             _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+        }
+    }
+
+    private void CheckFall()
+    {
+        if (_groundDetector)
+        {
+            if (!_isJump && _rigidbody.velocity.y > 0)
+            {
+                _playerAnimationChanger.ChangeJumpAnimation();
+
+                _isJump = true;
+                _isFall = false;
+            }
+            else if (!_isFall && _rigidbody.velocity.y < 0)
+            {
+                _playerAnimationChanger.ChangeFallAnimation();
+
+                _isJump = false;
+                _isFall = true;
+            }
+        }
+        else
+        {
+            _isJump = false;
+            _isFall = false;
         }
     }
 

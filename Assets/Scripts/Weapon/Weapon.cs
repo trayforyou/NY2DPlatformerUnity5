@@ -6,7 +6,7 @@ public class Weapon : MonoBehaviour
 {
     [SerializeField] WeaponPreview _weaponPreview;
 
-    internal void Drop()
+    public void Drop()
     {
         Instantiate(_weaponPreview, transform.position, Quaternion.identity);
 

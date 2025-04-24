@@ -22,10 +22,11 @@ public class PlayerChecker : MonoBehaviour
         _directionLeft = -1f;
         _directionLook = _directionRight;
 
-        _enemyFliper.LookedAtRight += ChangeDirection;
-
         _visibleLayers = _groundLayer.value | _playerLayer;
     }
+
+    private void OnEnable() =>
+        _enemyFliper.LookedAtRight += ChangeDirection;
 
     private void FixedUpdate()
     {
