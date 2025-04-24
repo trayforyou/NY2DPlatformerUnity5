@@ -2733,6 +2733,7 @@ GameObject:
   - component: {fileID: 942710732}
   - component: {fileID: 942710733}
   - component: {fileID: 942710734}
+  - component: {fileID: 942710735}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -2983,6 +2984,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthPoint: 10
+--- !u!114 &942710735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 942710721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 499044f3812827a4fb703b6dbf6b47f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &980783880
 GameObject:
   m_ObjectHideFlags: 0
@@ -4732,7 +4745,7 @@ MonoBehaviour:
   - {fileID: 690437259}
   - {fileID: 2086829575}
   - {fileID: 317918587}
-  _prefab: {fileID: 8551124677791747495, guid: fe95806a8c3be634886f003e37557147, type: 3}
+  _prefab: {fileID: 3937220163252521032, guid: fe95806a8c3be634886f003e37557147, type: 3}
   _countMedKits: 5
 --- !u!4 &1687581763
 Transform:

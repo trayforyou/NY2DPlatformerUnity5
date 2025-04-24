@@ -9,7 +9,7 @@ public class EnemySpawnPoint : MonoBehaviour
 
     public Enemy CurrentEnemy => _enemy;
 
-    internal void SetEnemy(Enemy enemy)
+    public void SetEnemy(Enemy enemy)
     {
         _enemy = enemy;
         _enemy.transform.position = transform.position;

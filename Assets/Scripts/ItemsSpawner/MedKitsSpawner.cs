@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemsSpawner : MonoBehaviour
+public class MedKitsSpawner : MonoBehaviour
 {
     [SerializeField] List<ItemSpawnPoint> _spawnPoints;
-    [SerializeField] Item _prefab;
+    [SerializeField] MedKit _prefab;
     [SerializeField] int _countMedKits;
 
     private ItemSpawnPoint _tempSpawnPoint;
@@ -25,7 +25,7 @@ public class ItemsSpawner : MonoBehaviour
 
     private void SpawnItems()
     {
-        Item tempItem;
+         MedKit tempItem;
 
         for (int i = 0; i < _countMedKits; i++)
         {
@@ -43,6 +43,6 @@ public class ItemsSpawner : MonoBehaviour
 
         _spawnPoints.RemoveAt(_tempElementIndex);
 
-        return _tempPosition;
+        return _tempPosition; 
     }
 }

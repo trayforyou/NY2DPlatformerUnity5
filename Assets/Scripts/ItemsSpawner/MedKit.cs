@@ -1,9 +1,11 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Item))]
-public class MedKit : MonoBehaviour
+public class MedKit : MonoBehaviour, Item
 {
     [SerializeField] int _healthPoint;
+
+    public void Accept(IVisitor visitor) =>
+        visitor.Visit(this);
 
     public int GetHealPoint()
     {

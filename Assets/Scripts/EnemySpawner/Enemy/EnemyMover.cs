@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
@@ -112,7 +111,7 @@ public class EnemyMover : MonoBehaviour
         }
     }
 
-    internal void SetRoute(List<WayPoint> wayPoints)
+    public void SetRoute(List<WayPoint> wayPoints)
     {
         _movePoints = wayPoints;
 

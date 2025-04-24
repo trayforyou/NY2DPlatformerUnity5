@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class WeaponPreview : MonoBehaviour
+public class WeaponPreview : MonoBehaviour, Item
 {
     [SerializeField] Weapon _weapon;
 
     public Weapon Weapon => _weapon;
 
-    internal Weapon TakeWeapon()
+    public void Accept(IVisitor visitor) =>
+        visitor.Visit(this);
+
+    public Weapon TakeWeapon()
     {
         Destroy(gameObject);
 

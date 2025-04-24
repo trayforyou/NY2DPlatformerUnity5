@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class GroundDetector : MonoBehaviour
@@ -8,7 +7,7 @@ public class GroundDetector : MonoBehaviour
 
     private Vector2 _groundCheckerSize;
     private bool _isGrounded;
-    
+
     public bool IsGrounded => _isGrounded;
 
     private void Awake()
@@ -18,8 +17,6 @@ public class GroundDetector : MonoBehaviour
         _groundCheckerSize = new Vector2(widthCapsule, heightCapsule);
     }
 
-    private void FixedUpdate()
-    {
+    private void FixedUpdate() =>
         _isGrounded = Physics2D.OverlapCapsule(transform.position, _groundCheckerSize, CapsuleDirection2D.Horizontal, 0, _groundLayer);
-    }
 }
