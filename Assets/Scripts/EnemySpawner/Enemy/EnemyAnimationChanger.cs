@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
 public class EnemyAnimationChanger : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
@@ -26,7 +25,4 @@ public class EnemyAnimationChanger : MonoBehaviour
             _currentState = AnimatorData.Params.Idle;
         }
     }
-
-    private void Awake() =>
-        _animator = GetComponent<Animator>();
 }

@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerAttack))]
 public class PlayerHand : Hand
 {
     [SerializeField] private Weapon _currentWeapon;

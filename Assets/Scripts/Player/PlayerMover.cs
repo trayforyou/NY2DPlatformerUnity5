@@ -1,19 +1,17 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(PlayerInput))]
-[RequireComponent(typeof(Fliper))]
-[RequireComponent(typeof(PlayerAnimationChanger))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMover : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpForce;
     [SerializeField] private GroundDetector _groundDetector;
+    [SerializeField] private Fliper _fliper;
+    [SerializeField] private PlayerAnimationChanger _playerAnimationChanger;
 
     private Rigidbody2D _rigidbody;
     private PlayerInput _inputPlayer;
-    private PlayerAnimationChanger _playerAnimationChanger;
-    private Fliper _fliper;
     private float _xMove;
     private bool _isTryJump;
     private bool _isJump;
@@ -25,10 +23,8 @@ public class PlayerMover : MonoBehaviour
         _isTryJump = false;
         _isJump = false;
         _isFall = false;
-        _rigidbody = GetComponent<Rigidbody2D>();
         _inputPlayer = GetComponent<PlayerInput>();
-        _fliper = GetComponent<Fliper>();
-        _playerAnimationChanger = GetComponent<PlayerAnimationChanger>();
+        _rigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void OnEnable()
@@ -55,7 +51,7 @@ public class PlayerMover : MonoBehaviour
     {
         if (_groundDetector.IsGrounded)
             _isTryJump = isTryJump;
-    }   
+    }
 
     private void Stay()
     {
@@ -70,7 +66,9 @@ public class PlayerMover : MonoBehaviour
         _fliper.Flip(_xMove);
 
         if (_groundDetector.IsGrounded && _xMove != 0)
-                _playerAnimationChanger.ChangeRunAnimation();         
+        {
+            _playerAnimationChanger.ChangeRunAnimation();
+        }
     }
 
     private void Jump()
@@ -85,7 +83,7 @@ public class PlayerMover : MonoBehaviour
 
     private void CheckFall()
     {
-        if (_groundDetector)
+        if (_groundDetector.IsGrounded == false)
         {
             if (!_isJump && _rigidbody.velocity.y > 0)
             {

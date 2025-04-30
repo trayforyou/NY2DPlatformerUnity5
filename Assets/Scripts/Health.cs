@@ -1,21 +1,64 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Destroyer))]
 public class Health : MonoBehaviour
 {
-    [SerializeField, Min(1)] private int _healthPoint;
+    [SerializeField, Min(5)] private int _points;
+
+    private int _maxHealth;
 
     public event Action HealthEnded;
+    public event Action StateChanged;
+
+    public int Points => _points;
+
+
+    private void Awake()
+    {
+        _maxHealth = _points;
+    }
 
     public void TakeDamage(int damage)
     {
-        _healthPoint -= damage;
+        int tempHealth;
 
-        if (_healthPoint <= 0)
+        damage = CheckCorrectNumber(damage);
+
+        tempHealth = _points - damage;
+
+        if (tempHealth <= 0)
+            _points = 0;
+        else
+            _points = tempHealth;
+
+        if (_points <= 0)
             HealthEnded?.Invoke();
+
+        StateChanged?.Invoke();
     }
 
-    public void Heal(int healPoints) =>
-        _healthPoint += healPoints;
+    public void Heal(int healPoints)
+    {
+        int tempHealth;
+
+        healPoints = CheckCorrectNumber(healPoints);
+
+        tempHealth = _points + healPoints;
+
+        if (tempHealth > _maxHealth)
+            _points = _maxHealth;
+        else
+            _points = tempHealth;
+
+        StateChanged?.Invoke();
+    }
+
+    private int CheckCorrectNumber(int number)
+    {
+        if (number <= 0)
+            number = 0;
+
+        return number;
+    }
 }

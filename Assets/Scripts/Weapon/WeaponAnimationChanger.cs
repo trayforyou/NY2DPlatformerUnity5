@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(WeaponAttack))]
 [RequireComponent(typeof(Animator))]
 public class WeaponAnimationChanger : MonoBehaviour
 {

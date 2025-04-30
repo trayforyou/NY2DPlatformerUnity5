@@ -3,15 +3,17 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimationChanger : MonoBehaviour
 {
-    [SerializeField] private GroundDetector _groundDetector;
-
     private Animator _animator;
     private int _currentState;
-    private bool _canChangeState;
+
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+    }
 
     public void ChangeFallAnimation()
     {
-        if (_currentState != AnimatorData.Params.Fall && _canChangeState)
+        if (_currentState != AnimatorData.Params.Fall)
         {
             _animator.Play(AnimatorData.Params.Fall);
             
@@ -21,7 +23,7 @@ public class PlayerAnimationChanger : MonoBehaviour
 
     public void ChangeJumpAnimation()
     {
-        if (_currentState != AnimatorData.Params.Jump && _canChangeState)
+        if (_currentState != AnimatorData.Params.Jump)
         {
             _animator.Play(AnimatorData.Params.Jump);
             
@@ -31,7 +33,7 @@ public class PlayerAnimationChanger : MonoBehaviour
 
     public void ChangeRunAnimation()
     {
-        if (_currentState != AnimatorData.Params.Run && _canChangeState)
+        if (_currentState != AnimatorData.Params.Run)
         {
             _animator.Play(AnimatorData.Params.Run);
             
@@ -41,18 +43,11 @@ public class PlayerAnimationChanger : MonoBehaviour
 
     public void ChangeIdleAnimation()
     {
-        if (_currentState != AnimatorData.Params.Idle && _canChangeState)
+        if (_currentState != AnimatorData.Params.Idle)
         {
             _animator.Play(AnimatorData.Params.Idle);
         
             _currentState = AnimatorData.Params.Idle;
         }
-    }
-
-    private void Awake()
-    {
-        _animator = GetComponent<Animator>();
-
-        _canChangeState = true;
     }
 }

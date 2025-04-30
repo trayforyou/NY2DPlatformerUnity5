@@ -3,8 +3,6 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(EnemyAnimationChanger))]
-[RequireComponent(typeof(Fliper))]
 public class EnemyMover : MonoBehaviour
 {
     [SerializeField] private List<WayPoint> _movePoints;
@@ -12,11 +10,11 @@ public class EnemyMover : MonoBehaviour
     [SerializeField] private float _stayTime;
     [SerializeField] private float _speed;
     [SerializeField] private float _rageSpeed;
+    [SerializeField] private Fliper _fliper;
+    [SerializeField] private EnemyAnimationChanger _enemyAnimationChanger;
 
     private WayPoint _currentWayPoint;
-    private EnemyAnimationChanger _enemyAnimationChanger;
     private Rigidbody2D _rigidbody;
-    private Fliper _fliper;
     private WaitForSeconds _waitChangeWaiPoint;
     private Vector2 _currentDirection;
     private Coroutine _coroutine;
@@ -28,8 +26,6 @@ public class EnemyMover : MonoBehaviour
     private void Awake()
     {
         _waitChangeWaiPoint = new WaitForSeconds(_stayTime);
-        _fliper = GetComponent<Fliper>();
-        _enemyAnimationChanger = GetComponent<EnemyAnimationChanger>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _minimalDistance = 0.5f;
         _isAttack = false;
