@@ -5,7 +5,7 @@ public class HealthBar : HealthVisualizator
 {
     [SerializeField] private Slider _slider;
 
-    protected override void VisualiseNewValue()
+    protected override void UpdateValue()
     {
         if (_slider.maxValue != _maxValue)
             _slider.maxValue = _maxValue;

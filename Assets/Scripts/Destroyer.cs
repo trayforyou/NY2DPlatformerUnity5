@@ -8,10 +8,10 @@ public class Destroyer : MonoBehaviour
         _health = GetComponent<Health>();
 
     private void OnEnable() =>
-        _health.HealthEnded += Destroy;
+        _health.Ended += Destroy;
 
     private void OnDisable() =>
-        _health.HealthEnded -= Destroy;
+        _health.Ended -= Destroy;
 
     private void Destroy() =>
         Destroy(gameObject);

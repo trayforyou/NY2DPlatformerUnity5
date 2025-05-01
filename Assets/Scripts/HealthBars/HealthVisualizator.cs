@@ -9,14 +9,14 @@ public class HealthVisualizator : MonoBehaviour
     private void Start()
     {
         _maxValue = _health.Points;
-        VisualiseNewValue();
+        UpdateValue();
     }
 
     private void OnEnable() =>
-        _health.StateChanged += VisualiseNewValue;
+        _health.StateChanged += UpdateValue;
 
     private void OnDisable() =>
-        _health.StateChanged -= VisualiseNewValue;
+        _health.StateChanged -= UpdateValue;
 
-    protected virtual void VisualiseNewValue(){}
+    protected virtual void UpdateValue(){}
 }

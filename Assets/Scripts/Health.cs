@@ -1,14 +1,13 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
     [SerializeField, Min(5)] private int _points;
 
-    private int _maxHealth;
+    private int _maxValue;
 
-    public event Action HealthEnded;
+    public event Action Ended;
     public event Action StateChanged;
 
     public int Points => _points;
@@ -16,40 +15,40 @@ public class Health : MonoBehaviour
 
     private void Awake()
     {
-        _maxHealth = _points;
+        _maxValue = _points;
     }
 
     public void TakeDamage(int damage)
     {
-        int tempHealth;
+        int tempValue;
 
         damage = CheckCorrectNumber(damage);
 
-        tempHealth = _points - damage;
+        tempValue = _points - damage;
 
-        if (tempHealth <= 0)
+        if (tempValue <= 0)
             _points = 0;
         else
-            _points = tempHealth;
+            _points = tempValue;
 
         if (_points <= 0)
-            HealthEnded?.Invoke();
+            Ended?.Invoke();
 
         StateChanged?.Invoke();
     }
 
     public void Heal(int healPoints)
     {
-        int tempHealth;
+        int tempValue;
 
         healPoints = CheckCorrectNumber(healPoints);
 
-        tempHealth = _points + healPoints;
+        tempValue = _points + healPoints;
 
-        if (tempHealth > _maxHealth)
-            _points = _maxHealth;
+        if (tempValue > _maxValue)
+            _points = _maxValue;
         else
-            _points = tempHealth;
+            _points = tempValue;
 
         StateChanged?.Invoke();
     }

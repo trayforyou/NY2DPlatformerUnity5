@@ -9,12 +9,12 @@ public class SmoothHealthBar : HealthVisualizator
 
     private float _changeStep;
     private Coroutine _coroutine;
-    private WaitForSeconds wait;
+    private WaitForSeconds _wait;
 
     private void Awake()
     {
         _changeStep = 0.5f;
-        wait = new WaitForSeconds(_changeValueSpeed);
+        _wait = new WaitForSeconds(_changeValueSpeed);
     }
 
     private void OnDisable()
@@ -23,7 +23,7 @@ public class SmoothHealthBar : HealthVisualizator
             StopCoroutine(_coroutine);
     }
 
-    protected override void VisualiseNewValue()
+    protected override void UpdateValue()
     {
         if (_slider.maxValue != _maxValue)
         {
@@ -34,20 +34,18 @@ public class SmoothHealthBar : HealthVisualizator
         if (_coroutine != null)
             StopCoroutine(_coroutine);
 
-        _coroutine = StartCoroutine(StartChangeValue(_health.Points));
+        _coroutine = StartCoroutine(ChangeValue(_health.Points));
     }
 
-    private IEnumerator StartChangeValue(int newValue)
+    private IEnumerator ChangeValue(int newValue)
     {
         while (_slider.value != newValue)
         {
             _slider.value = Mathf.MoveTowards(_slider.value, newValue, _changeStep);
 
-            yield return wait;
+            yield return _wait;
         }
 
         _coroutine = null;
-
-        yield break;
     }
 }

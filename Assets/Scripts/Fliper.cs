@@ -6,7 +6,16 @@ public class Fliper : MonoBehaviour
     private int _mirrorFlip;
     private bool _isLookAtRight;
 
-    public event Action<bool> LookedAtRight;
+    public event Action<bool> LookingAtRight;
+
+    private void Awake()
+    {
+        _isLookAtRight = true;
+
+        LookingAtRight?.Invoke(_isLookAtRight);
+
+        _mirrorFlip = 180;
+    }
 
     public void Flip(float xDirection)
     {
@@ -14,7 +23,7 @@ public class Fliper : MonoBehaviour
         {
             _isLookAtRight = false;
 
-            LookedAtRight?.Invoke(_isLookAtRight);
+            LookingAtRight?.Invoke(_isLookAtRight);
 
             transform.Rotate(Vector2.up,_mirrorFlip);
         }
@@ -22,18 +31,9 @@ public class Fliper : MonoBehaviour
         {
             _isLookAtRight = true;
 
-            LookedAtRight?.Invoke(_isLookAtRight);
+            LookingAtRight?.Invoke(_isLookAtRight);
 
             transform.Rotate(Vector2.up, _mirrorFlip);
         }
-    }
-
-    private void Awake()
-    {
-        _isLookAtRight = true;
-
-        LookedAtRight?.Invoke(_isLookAtRight);
-
-        _mirrorFlip = 180;
     }
 }

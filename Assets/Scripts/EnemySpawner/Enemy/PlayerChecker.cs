@@ -26,7 +26,7 @@ public class PlayerChecker : MonoBehaviour
     }
 
     private void OnEnable() =>
-        _enemyFliper.LookedAtRight += ChangeDirection;
+        _enemyFliper.LookingAtRight += ChangeDirection;
 
     private void FixedUpdate()
     {
@@ -40,7 +40,7 @@ public class PlayerChecker : MonoBehaviour
     }
 
     private void OnDisable() =>
-        _enemyFliper.LookedAtRight -= ChangeDirection;
+        _enemyFliper.LookingAtRight -= ChangeDirection;
 
     private void ChangeDirection(bool isLookAtRight)
     {
