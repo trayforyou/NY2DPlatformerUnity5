@@ -10,6 +10,6 @@ public class HealthBar : StorageVisualisator
         if (_slider.maxValue != _maxValue)
             _slider.maxValue = _maxValue;
 
-        _slider.value = _storage.Points;
+        _slider.value = _health.Points;
     }
 }

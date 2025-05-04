@@ -61,7 +61,7 @@ public class Vampirism : MonoBehaviour
             _healthEnemies.Remove(health);
     }
 
-    private void CheckEnemyNearby()
+    private void EnemyNearbyCheck()
     {
         float sqrNewHealthDistance;
         float sqrOldHealthDistance;
@@ -92,7 +92,7 @@ public class Vampirism : MonoBehaviour
     {
         while (_isEnabled)
         {
-            CheckEnemyNearby();
+            EnemyNearbyCheck();
 
             if (_enemyHealth != null)
             {

@@ -1,5 +1,28 @@
-public class Health : Storage
+using System;
+using UnityEngine;
+
+public class Health : MonoBehaviour
 {
+    [SerializeField, Min(0)] protected int _points;
+
+    protected int _maxValue;
+
+    public event Action Ended;
+    public event Action StateChanged;
+
+    public int Points => _points;
+
+    protected void Awake()
+    {
+        _maxValue = _points;
+    }
+
+    protected void ChangeState() =>
+        StateChanged?.Invoke();
+
+    protected void End() =>
+        Ended?.Invoke();
+
     public void TakeDamage(int damage)
     {
         int tempValue;

@@ -20,42 +20,39 @@ public class AbilityBar : MonoBehaviour
 
     private void OnEnable()
     {
-        _vampirism.Activated += StartChangeValue;
+        _vampirism.Activated += Reduce;
     }
 
     private void OnDisable()
     {
-        _vampirism.Activated -= StartChangeValue;
+        _vampirism.Activated -= Reduce;
 
         if (_coroutine != null)
             StopCoroutine(_coroutine);
     }
 
-    private void StartChangeValue()
+    private void Reduce()
     {
-        _coroutine = StartCoroutine(ChangeValue());
+        _coroutine = StartCoroutine(ChangeValue(_slider.minValue,_attackDuration));
     }
 
-    private IEnumerator ChangeValue()
+    private void Increase()
     {
-        _speed = _slider.maxValue / _attackDuration;
+        _coroutine = StartCoroutine(ChangeValue(_slider.maxValue, _attackRechange));
+    }
 
-        while (_slider.value != _slider.minValue)
+    private IEnumerator ChangeValue(float targetValue, float duration)
+    {
+        _speed = _slider.maxValue / duration;
+
+        while (_slider.value != targetValue)
         {
-            _slider.value = Mathf.MoveTowards(_slider.value, _slider.minValue, _speed * Time.deltaTime);
+            _slider.value = Mathf.MoveTowards(_slider.value, targetValue, _speed * Time.deltaTime);
 
             yield return null;
         }
-
-        _speed = _slider.maxValue / _attackRechange;
-
-        while (_slider.value != _slider.maxValue)
-        {
-            _slider.value = Mathf.MoveTowards(_slider.value, _slider.maxValue, _speed * Time.deltaTime);
-
-            yield return null;
-        }
-
-        _coroutine = null;
+        
+        if (_slider.value != _slider.maxValue)
+            Increase();
     }
 }

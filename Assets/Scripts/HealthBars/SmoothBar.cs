@@ -34,7 +34,7 @@ public class SmoothBar : StorageVisualisator
         if (_coroutine != null)
             StopCoroutine(_coroutine);
 
-        _coroutine = StartCoroutine(ChangeValue(_storage.Points));
+        _coroutine = StartCoroutine(ChangeValue(_health.Points));
     }
 
     private IEnumerator ChangeValue(int newValue)
