@@ -1,23 +1,5 @@
-using System;
-using UnityEngine;
-
-public class Health : MonoBehaviour
+public class Health : Storage
 {
-    [SerializeField, Min(5)] private int _points;
-
-    private int _maxValue;
-
-    public event Action Ended;
-    public event Action StateChanged;
-
-    public int Points => _points;
-
-
-    private void Awake()
-    {
-        _maxValue = _points;
-    }
-
     public void TakeDamage(int damage)
     {
         int tempValue;
@@ -32,9 +14,9 @@ public class Health : MonoBehaviour
             _points = tempValue;
 
         if (_points <= 0)
-            Ended?.Invoke();
+            End();
 
-        StateChanged?.Invoke();
+        ChangeState(); ;
     }
 
     public void Heal(int healPoints)
@@ -50,7 +32,7 @@ public class Health : MonoBehaviour
         else
             _points = tempValue;
 
-        StateChanged?.Invoke();
+        ChangeState();
     }
 
     private int CheckCorrectNumber(int number)

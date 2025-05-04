@@ -1,0 +1,4 @@
+repository "NY2DPlatformerUnity5@tray_for_you@cloud"
+  path "/"
+    br "/main"
+    co "/main"

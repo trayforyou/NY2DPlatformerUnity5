@@ -1,22 +1,22 @@
 using UnityEngine;
 
-public class HealthVisualizator : MonoBehaviour
+public class StorageVisualisator : MonoBehaviour
 {
-    [SerializeField] protected Health _health;
+    [SerializeField] protected Storage _storage;
     
     protected int _maxValue;
 
     private void Start()
     {
-        _maxValue = _health.Points;
+        _maxValue = _storage.Points;
         UpdateValue();
     }
 
     private void OnEnable() =>
-        _health.StateChanged += UpdateValue;
+        _storage.StateChanged += UpdateValue;
 
     private void OnDisable() =>
-        _health.StateChanged -= UpdateValue;
+        _storage.StateChanged -= UpdateValue;
 
     protected virtual void UpdateValue(){}
 }

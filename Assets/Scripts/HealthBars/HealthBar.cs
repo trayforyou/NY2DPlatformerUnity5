@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : HealthVisualizator
+public class HealthBar : StorageVisualisator
 {
     [SerializeField] private Slider _slider;
 
@@ -10,6 +10,6 @@ public class HealthBar : HealthVisualizator
         if (_slider.maxValue != _maxValue)
             _slider.maxValue = _maxValue;
 
-        _slider.value = _health.Points;
+        _slider.value = _storage.Points;
     }
 }

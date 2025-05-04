@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SmoothHealthBar : HealthVisualizator
+public class SmoothBar : StorageVisualisator
 {
     [SerializeField] private Slider _slider;
     [SerializeField] private float _changeValueSpeed;
@@ -34,7 +34,7 @@ public class SmoothHealthBar : HealthVisualizator
         if (_coroutine != null)
             StopCoroutine(_coroutine);
 
-        _coroutine = StartCoroutine(ChangeValue(_health.Points));
+        _coroutine = StartCoroutine(ChangeValue(_storage.Points));
     }
 
     private IEnumerator ChangeValue(int newValue)
