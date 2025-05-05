@@ -23,7 +23,7 @@ public class Health : MonoBehaviour
     protected void End() =>
         Ended?.Invoke();
 
-    public void TakeDamage(int damage)
+    public int TakeDamage(int damage)
     {
         int tempValue;
 
@@ -32,14 +32,19 @@ public class Health : MonoBehaviour
         tempValue = _points - damage;
 
         if (tempValue <= 0)
+        {
+            damage += tempValue;
             _points = 0;
+        }
         else
             _points = tempValue;
 
         if (_points <= 0)
             End();
 
-        ChangeState(); ;
+        ChangeState();
+
+        return damage;
     }
 
     public void Heal(int healPoints)

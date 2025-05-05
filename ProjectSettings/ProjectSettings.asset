@@ -943,10 +943,10 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 9c8982c1-4a51-4462-8f20-8b0efd26e19a
+  cloudProjectId: 92eeb417-e9a8-43fe-939d-ecd28de3c4de
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: NY2DPlatformerUnity5
+  projectName: 2DPVamp
   organizationId: tray_for_you
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

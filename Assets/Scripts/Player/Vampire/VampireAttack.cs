@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerInput))]
 public class VampireAttack : MonoBehaviour
 {
-    [SerializeField] private float _rechange;
+    [SerializeField] private float _recharge;
     [SerializeField] private float _duration;
     [SerializeField] private Vampirism _vampirism;
 
@@ -15,15 +15,15 @@ public class VampireAttack : MonoBehaviour
     private PlayerInput _playerInput;
     private Coroutine _coroutine;
 
-    public float Rechange => _rechange;
-    public float Duration => _duration;
-
     public event Action Activated;
+
+    public float Rechange => _recharge;
+    public float Duration => _duration;
 
     private void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
-        _waitRechange = new WaitForSeconds(_rechange);
+        _waitRechange = new WaitForSeconds(_recharge);
         _waitAttack = new WaitForSeconds(_duration);
         _readyForActivate = true;
 
@@ -37,7 +37,7 @@ public class VampireAttack : MonoBehaviour
 
     private void OnDisable()
     {
-        _playerInput.ActivatedVamirism += Activate;
+        _playerInput.ActivatedVamirism -= Activate;
 
         if (_coroutine != null)
             StopCoroutine(_coroutine);

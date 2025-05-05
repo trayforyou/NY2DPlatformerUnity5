@@ -2650,7 +2650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe3165de1a42594e8b5b2f3028813b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rechange: 4
+  _recharge: 1
   _duration: 6
   _vampirism: {fileID: 1901903135}
 --- !u!1001 &918303375
@@ -63756,6 +63756,7 @@ GameObject:
   - component: {fileID: 1901903138}
   - component: {fileID: 1901903139}
   - component: {fileID: 1901903140}
+  - component: {fileID: 1901903141}
   m_Layer: 9
   m_Name: Vampirism
   m_TagString: Untagged
@@ -63790,10 +63791,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad8e134d331a2549a46b3987036f274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthEnemies: []
   _playerHealth: {fileID: 917860502}
   _suckDelay: 0.1
-  _enemyHealth: {fileID: 0}
+  _damagePoints: 0
 --- !u!212 &1901903137
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -63918,6 +63918,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ac09a532cbd56a4f974eb6591e8ad7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1901903141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901903133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad63fe26ed566764a8e8be7bb2a2e467, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1948228636 stripped
