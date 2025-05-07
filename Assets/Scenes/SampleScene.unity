@@ -63793,7 +63793,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerHealth: {fileID: 917860502}
   _suckDelay: 0.1
-  _damagePoints: 0
+  _damagePoints: 5
 --- !u!212 &1901903137
 SpriteRenderer:
   m_ObjectHideFlags: 0
